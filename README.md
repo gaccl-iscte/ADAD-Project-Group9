@@ -1,4 +1,8 @@
 # ADAD-Project-Group9
+
+## Link for the documentation
+https://documenter.getpostman.com/view/39520152/2sAYBPnF6s
+
 ### Members
 ```
 98616 - Bernardo Assunção - METI-PL-A1 - Bernardo_Assuncao@iscte-iul.pt
@@ -7,9 +11,6 @@
 99435 - Nuno Teixeira - METI-PL-A1 - Nuno_Oliveira_Teixiera@iscte-iul.pt
 99227 - Tomás Catarino - METI-A1 - Tomas_Catarino@iscte-iul.pt
 ```
-
-## Link for the documentation
-...
 
 ### Command do add price to books at collection "books":
 ```mongodb
