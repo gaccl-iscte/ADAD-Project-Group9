@@ -154,7 +154,7 @@ router.post('/route', async (req, res) => {
 });
 
 
-//#20.5 - Lista de livrarias perto de uma localização
+//#20.5 - Retornar o número de livrarias perto de uma localização
 router.get('/count-near', async (req, res) => {
   const { lat, lon, radius = 1000 } = req.query;
 
