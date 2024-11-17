@@ -4,33 +4,6 @@ import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
-//#18 - Adicionar novo comentário
-// router.post('/', async (req, res) => {
-//     try {
-//       const { book_id, comment, user_id } = req.body;
-//       console.log(book_id);
-//       console.log(comment);
-//       console.log(user_id);
-//       if (!book_id || !comment || !user_id) {
-//         return res.status(400).send({ error: "É necessário o book_id, o user_id e o comentário" });
-//       }
-  
-//       const newComment = {
-//         "movie_id": book_id,
-//         "user_id": user_id,
-//         "comment": comment,
-//         "date": new Date() 
-//       };
-  
-//       const result = await db.collection('comments').insertOne(newComment);
-  
-//       res.status(201).json(newComment);
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).send({ error: "Ocorreu um erro ao adicionar o comentário" });
-//     }
-//   });
-
 router.post('/', async (req, res) => {
   try {
     const { book_id, comment, user_id } = req.body;
