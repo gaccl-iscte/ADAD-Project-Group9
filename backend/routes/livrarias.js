@@ -61,6 +61,10 @@ router.get('/:id/books', async (req, res) => {
     const numberOfBooks = books.length;
     const numberOfPages = Math.max(1, Math.ceil((numberOfBooks || 0) / limit));
 
+    if (page > numberOfPages) {
+      return res.status(400).send({ error: "Página não existe" });
+    }
+
     const previousPage = page > 1 ? page - 1 : null;
     const nextPage = page < numberOfPages ? page + 1 : null;
 
@@ -154,7 +158,7 @@ router.post('/route', async (req, res) => {
 });
 
 
-//#20.5 - Retornar o número de livrarias perto de uma localização
+//#20.5 - Número de livrarias perto de uma localização
 router.get('/count-near', async (req, res) => {
   const { lat, lon, radius = 1000 } = req.query;
 

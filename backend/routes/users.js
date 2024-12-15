@@ -25,6 +25,10 @@ router.get("/", async (req, res) => {
     const numberOfUsers = await db.collection('users').countDocuments();
     const numberOfPages = Math.ceil(numberOfUsers / limit);
 
+    if (page > numberOfPages) {
+      return res.status(400).send({ error: "Página não existe" });
+    }
+
     const previousPage = page > 1 ? page - 1 : null;
     const nextPage = page < numberOfPages ? page + 1 : null;
 
@@ -115,6 +119,7 @@ router.get("/:id", async (req, res) => {
     }
 
     const bookIds = user.reviews.map(review => review.book_id);
+
     const books = await db.collection('books').find({ _id: { $in: bookIds } }).toArray();
 
     if (books.length === 0) {
@@ -129,12 +134,19 @@ router.get("/:id", async (req, res) => {
       };
     });
 
-    // ordenar os livros por rating
     booksWithReviews.sort((a, b) => (b.rating || 0) - (a.rating || 0));
 
-    const topBooks = booksWithReviews.slice(0, 3);
+    // selecionar os top 3 livros
+    const topBooks = booksWithReviews.slice(0, 3).map(book => ({
+      id: book._id, // certificar de incluir o ID do livro para o frontend
+      title: book.title,
+      authors: book.authors,
+      price: book.price,
+      shortDescription: book.shortDescription,
+      thumbnailUrl: book.thumbnailUrl,
+      rating: book.rating
+    }));
 
-    // Passo 7: Retornar o usuário e seus top 3 livros
     res.status(200).send({
       user: {
         "ID do utilizador": user._id,

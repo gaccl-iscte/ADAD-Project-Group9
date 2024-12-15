@@ -39,8 +39,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-  
-
 //#19 - Remove comment by _id
 router.delete("/:id", async (req, res) => {
     try {    

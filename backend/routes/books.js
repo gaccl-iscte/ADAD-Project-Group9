@@ -30,6 +30,9 @@ router.get("/", async (req, res) => {
     const numberOfBooks = await db.collection('books').countDocuments();
     const numberOfPages = Math.max(1, Math.ceil((numberOfBooks || 0) / limit));
     if (numberOfPages < 1) numberOfPages = 1;
+    if (page > numberOfPages) {
+      return res.status(400).send({ error: "Página não existe" });
+    }
 
     const previousPage = page > 1 ? page - 1 : null;
     const nextPage = page < numberOfPages ? page + 1 : null;
@@ -278,6 +281,10 @@ router.get("/star", async (req, res) => {
     const numberOfBooks = starBooks.length;
     const numberOfPages = Math.max(1, Math.ceil(numberOfBooks / limit));
 
+    if (page > numberOfPages) {
+      return res.status(400).send({ error: "Página não existe" });
+    }
+
     const previousPage = page > 1 ? page - 1 : null;
     const nextPage = page < numberOfPages ? page + 1 : null;
 
@@ -372,6 +379,10 @@ router.get('/comments', async (req, res) => {
       const numberOfBooks = numberOfBooksWithComments.length > 0 ? numberOfBooksWithComments[0].total : 0;
       const numberOfPages = Math.max(1, Math.ceil((numberOfBooks || 0) / limit));
 
+      if (page > numberOfPages) {
+        return res.status(400).send({ error: "Página não existe" });
+      }
+
       const previousPage = page > 1 ? page - 1 : null;
       const nextPage = page < numberOfPages ? page + 1 : null;
 
@@ -456,6 +467,10 @@ router.get('/job', async (req, res) => {
 
       const totalCount = numberOfJobReviews.length > 0 ? numberOfJobReviews[0].total : 0;
       const numberOfPages = Math.max(1, Math.ceil((totalCount || 0) / limit)); // Calcula o número de páginas
+
+      if (page > numberOfPages) {
+        return res.status(400).send({ error: "Página não existe" });
+      }
 
       const previousPage = page > 1 ? page - 1 : null;
       const nextPage = page < numberOfPages ? page + 1 : null;
@@ -563,6 +578,10 @@ router.get('/ratings/:order', async (req, res) => {
 
       const numberOfBooks = totalBooks[0]?.total || 0;
       const numberOfPages = Math.max(1, Math.ceil((numberOfBooks || 0) / limit));
+
+      if (page > numberOfPages) {
+        return res.status(400).send({ error: "Página não existe" });
+      }
 
       const previousPage = page > 1 ? page - 1 : null;
       const nextPage = page < numberOfPages ? page + 1 : null;
@@ -692,6 +711,10 @@ router.get('/year/:year', async (req, res) => {
     const numberOfBooks = await booksCollection.countDocuments(query);
     const numberOfPages = Math.max(1, Math.ceil((numberOfBooks || 0) / limit));
 
+    if (page > numberOfPages) {
+      return res.status(400).send({ error: "Página não existe" });
+    }
+
     const previousPage = page > 1 ? page - 1 : null;
     const nextPage = page < numberOfPages ? page + 1 : null;
 
@@ -755,9 +778,12 @@ router.get("/filter/by", async (req, res) => {
       .sort(sortOptions) // Aplicar ordenação, se houver
       .toArray();
 
-    const numberOfBooks = await db.collection("books").countDocuments(filters);
-    
+    const numberOfBooks = await db.collection("books").countDocuments(filters);    
     const numberOfPages = Math.max(1, Math.ceil((numberOfBooks || 0) / limit));
+
+    if (page > numberOfPages) {
+      return res.status(400).send({ error: "Página não existe" });
+    }
 
     const previousPage = page > 1 ? page - 1 : null;
     const nextPage = page < numberOfPages ? page + 1 : null;
